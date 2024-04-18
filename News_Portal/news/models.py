@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 
 class Author(models.Model):
-    user = models.OneToOneField('User', on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     rating = models.IntegerField(default=0)
 
     def update_rating(self):
@@ -66,7 +66,7 @@ class Comment(models.Model):
     comment_time = models.DateTimeField(auto_now_add=True)
     rating = models.IntegerField(default=0)
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
-    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def like(self):
         self.rating += 1
