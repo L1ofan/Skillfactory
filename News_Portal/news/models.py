@@ -55,7 +55,6 @@ class Post(models.Model):
         small_text = self.text[0:124] + '...'
         return small_text
 
-
 class PostCategory(models.Model):
     Post = models.ForeignKey(Post, on_delete=models.CASCADE)
     Category = models.ForeignKey(Category, on_delete=models.CASCADE)
