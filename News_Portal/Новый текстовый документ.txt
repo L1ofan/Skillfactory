@@ -17,3 +17,9 @@ cat1 = Category.objects.create(name='sport')
 p2 = Post.objects.create(title='title', text='text', post_type ='AR', author=a4) 
 >>> p3 = Post.objects.create(title='title', text='text', post_type ='AR', author=a3)  
 p2.category.add(cat3)
+Author.objects.all()
+Author.objects.get(pk=3).user
+Author.objects.get(pk=3).get_username_displey()
+Comment.objects.filter(
+
+
