@@ -23,6 +23,7 @@ class Author(models.Model):
         self.rating = posts_rating * 3 + comments_rating + posts_comments_rating
         self.save()
 
+
 class Category(models.Model):
     name = models.CharField(max_length=64,unique=True)
 
@@ -54,6 +55,10 @@ class Post(models.Model):
     def preview(self):
         small_text = self.text[0:124] + '...'
         return small_text
+
+    def __str__(self):
+        return f'{self.text[:20]}'
+
 
 class PostCategory(models.Model):
     Post = models.ForeignKey(Post, on_delete=models.CASCADE)
