@@ -1,5 +1,11 @@
 from django.views.generic import ListView, DetailView
 from .models import Product
+from .filters import ProductFilter
+from .forms import ProductForm
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from datetime import datetime
+from pprint import pprint
 
 
 class ProductsList(ListView):
@@ -7,6 +13,25 @@ class ProductsList(ListView):
     ordering = 'name'
     template_name = 'products.html'
     context_object_name = 'products'
+    paginate_by = 2
+
+    def get_queryset(self):
+        # Получаем обычный запрос
+        queryset = super().get_queryset()
+        # Используем наш класс фильтрации.
+        # self.request.GET содержит объект QueryDict, который мы рассматривали
+        # в этом юните ранее.
+        # Сохраняем нашу фильтрацию в объекте класса,
+        # чтобы потом добавить в контекст и использовать в шаблоне.
+        self.filterset = ProductFilter(self.request.GET, queryset)
+        # Возвращаем из функции отфильтрованный список товаров
+        return self.filterset.qs
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Добавляем в контекст объект фильтрации.
+        context['filterset'] = self.filterset
+        return context
 
 
 class ProductDetail(DetailView):
@@ -16,3 +41,14 @@ class ProductDetail(DetailView):
     template_name = 'product.html'
     # Название объекта, в котором будет выбранный пользователем продукт
     context_object_name = 'product'
+
+
+def Create_product(request):
+    if request.method == 'POST':
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/products/')
+
+    form = ProductForm()
+    return render(request,'product_edit.html',{'form' : form})
