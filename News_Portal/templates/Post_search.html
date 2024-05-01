@@ -9,14 +9,11 @@ Posts
 {% endblock title %}
 
 {% block content %}
-   <h1>Все новости</h1>
-   <!-- Вот так выглядело использование переменной и фильтра -->
-   <!-- <h3>{{ time_now|date:'M d Y' }}</h3> -->
-   <!-- А вот так мы используем наш тег-->
-   <h3> {{ next_sale|default_if_none:"Чуть позже сообщим о новостях!" }} </h3>
-   <h3>{{ Posts|length }}</h3>
+    <form action="" method="get">
+    {{ filterset.form.as_p }}
+        <input type="submit" value="Найти">
+    </form>
 
-   <hr>
    {% if Posts %}
        <table>
            <tr>
