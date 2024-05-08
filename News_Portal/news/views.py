@@ -4,6 +4,10 @@ from .forms import PostForm
 from datetime import datetime
 from .filters import PostFilter
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import TemplateView
+from django.utils.decorators import method_decorator
+from django.contrib.auth.decorators import login_required
 
 
 class PostsList(ListView):
@@ -63,10 +67,13 @@ class PostCreate(CreateView):
         return super().form_valid(form)
 
 
-class PostUpdate(UpdateView):
+class PostUpdate(LoginRequiredMixin,UpdateView):
     form_class = PostForm
     model = Post
     template_name = 'post_edit.html'
+
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
 
 
 class PostDelete(DeleteView):
