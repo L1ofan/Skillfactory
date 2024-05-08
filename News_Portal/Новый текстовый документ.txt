@@ -1,0 +1,25 @@
+from news.models import * 
+>>> u3 = User.objects.create_user(username='Vlad') 
+>>> a3 = Author.objects.create(user=u3) 
+>>> p1 = Post.objects.create(title='title', text='text',author=a3) 
+>>> c1 = Comment.objects.create(text='text',post=p1, user=a3.user)  
+>>> p1.like() 
+>>> a3.update_rating() 
+>>> a3.rating 
+3 
+>>> c1.like() 
+>>> u4 = User.objects.create_user(username='Danil') 
+>>> a4 = Author.objects.create(user=u4) 
+cat1 = Category.objects.create(name='sport') 
+>>> cat2 = Category.objects.create(name='News') 
+>>> cat3 = Category.objects.create(name='Horror') 
+>>> cat4 = Category.objects.create(name='Science fiction') 
+p2 = Post.objects.create(title='title', text='text', post_type ='AR', author=a4) 
+>>> p3 = Post.objects.create(title='title', text='text', post_type ='AR', author=a3)  
+p2.category.add(cat3)
+Author.objects.all()
+Author.objects.get(pk=3).user
+Author.objects.get(pk=3).get_username_displey()
+Comment.objects.filter(
+
+
